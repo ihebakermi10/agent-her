@@ -1,0 +1,10 @@
+google-genai
+opencv-python
+pyaudio
+pillow
+mss
+python-dotenv
+tweepy
+taskgroup
+langchain_google_genai
+stremlit
