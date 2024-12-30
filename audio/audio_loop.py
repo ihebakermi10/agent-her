@@ -65,9 +65,7 @@ class AudioLoop:
 
                 if self.video_mode == "camera":
                     tg.create_task(get_frames(self.out_queue))
-                elif self.video_mode == "screen":
-                    tg.create_task(get_screen_async(self.out_queue))
-
+ 
                 tg.create_task(self.receive_audio())
                 tg.create_task(play_audio(self.audio_in_queue))
 

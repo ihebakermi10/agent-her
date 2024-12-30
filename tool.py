@@ -104,24 +104,48 @@ async def generate_image_handler(prompt: str):
         llm = ChatGroq(
             model="llama3-70b-8192",
             api_key=os.environ.get("GROQ_API_KEY"),
-            temperature=0.25,
+            temperature=0.1,
             max_retries=2,
         )
 
         structured_llm = llm.with_structured_output(EnhancedPrompt)
 
         system_template = """
-        Enhance the given prompt with the best prompt engineering techniques, such as providing context, specifying style, medium, lighting, and camera details if applicable. If the prompt requests a realistic style, the enhanced prompt should include the image extension .HEIC.
+Enhance the given prompt using advanced prompt engineering techniques. Focus on providing detailed context, specifying the desired style, medium, lighting, and camera details (if applicable). Ensure that the images are not overly realistic but instead suitable for meme-style illustrations, humorous visual content, or exaggerated and playful depictions.
 
-        # Original Prompt
-        {prompt}
+# Instructions
+- Expand the prompt with relevant details to create a vivid and precise image description.
+- Emphasize meme-style humor, exaggerated elements, and a playful tone.
+- Use vibrant and bold colors, whimsical settings, and dynamic compositions.
+- Avoid overly realistic details; focus instead on cartoonish, stylized, or exaggerated visuals that resonate with internet meme culture.
 
-        # Objective
-        **Enhanced Prompt**: Add relevant details to the prompt, including context, description, specific visual elements, mood, and technical details. For realistic prompts, add '.HEIC' in the output specification.
+# Template
+Original Prompt: {prompt}
 
-        # Example
-        "realistic photo of a person having a coffee" -> "photo of a person having a coffee in a cozy cafe, natural morning light, shot with a 50mm f/1.8 lens, 8425.HEIC"
-        """
+Objective:
+**Enhanced Prompt**: Add specific and vivid details to the original prompt, incorporating visual elements, mood, style, and technical attributes to create humorous and meme-worthy illustrations. Avoid hyper-realism.
+
+# Example Enhancements
+1. "Create a meme of a happy trader" -> 
+   **Enhanced Prompt**: "Cartoon-style meme of an overly cheerful trader at a desk, surrounded by comically exaggerated monitors displaying skyrocketing stock market charts, sunlight streaming in with sparkles, vibrant colors, and a humorous text overlay in bold font. The background features floating dollar signs and a playful party vibe."
+
+2. "Stylized avatar for a metaverse" -> 
+   **Enhanced Prompt**: "Playful and exaggerated 3D avatar of a quirky character wearing oversized futuristic AR glasses, a cyberpunk-inspired suit with glowing neon details, exaggerated facial expressions, and a whimsical cityscape background filled with floating holograms and vibrant neon signage."
+
+3. "Motivational image" -> 
+   **Enhanced Prompt**: "Cartoon-style illustration of a vibrant sunrise over a mountain range, a comically heroic figure standing at the summit with a cape blowing in the wind, warm and exaggerated golden tones, playful typography overlay saying 'You Got This!' in bold letters, meme-ready resolution."
+
+4. "Fantasy castle" -> 
+   **Enhanced Prompt**: "Whimsical fantasy castle perched on a hill, surrounded by fluffy, exaggerated clouds and a vibrant cartoonish forest, intricate but exaggerated gothic spires, glowing magical runes, and a playful purple-hued sunset lighting the scene. Add humorous elements like a dragon roasting marshmallows on its fire breath."
+
+5. "Funny classroom scene" -> 
+   **Enhanced Prompt**: "Exaggerated meme-style illustration of a chaotic classroom. A teacher with comically large glasses is yelling at a student whose desk is surrounded by floating papers and cartoonish explosions. The student looks hilariously startled, and the caption reads 'I SAID NO HOMEWORK TODAY!' in bold white text with a black outline."
+
+# Your Turn
+Use this approach to transform and optimize the given prompt for creating meme-style or humorous illustrations rather than overly realistic images.
+"""
+
+
 
         prompt_template = PromptTemplate(
             input_variables=["prompt"],
